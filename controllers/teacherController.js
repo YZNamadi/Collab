@@ -2,21 +2,21 @@ const Teacher = require('../models/teacher');
 const Student = require('../models/student');
 
 
-exports.login = async (req, res) => {
-    const { name, subject } = req.body;
+// exports.login = async (req, res) => {
+//     const { name, subject } = req.body;
 
-    try {
-        const teacher = await Teacher.findOne({ name, subject });
-        if (!teacher) {
-            return res.status(400).json({ message: 'Invalid credentials.' });
-        }
+//     try {
+//         const teacher = await Teacher.findOne({ name, subject });
+//         if (!teacher) {
+//             return res.status(400).json({ message: 'Invalid credentials.' });
+//         }
 
-        const token = jwt.sign({ id: teacher._id, role: 'teacher' }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token });
-    } catch (err) {
-        res.status(500).json({ message: 'Server error.' });
-    }
-};
+//         const token = jwt.sign({ id: teacher._id, role: 'teacher' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+//         res.json({ token });
+//     } catch (err) {
+//         res.status(500).json({ message: 'Server error.' });
+//     }
+// };
 
 
 exports.viewAssignedStudents = async (req, res) => {

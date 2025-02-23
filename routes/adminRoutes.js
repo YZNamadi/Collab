@@ -1,16 +1,14 @@
-const express = require('express');
-const router = express.Router();
-const adminController = require('../controllers/adminController');
-const authenticateToken = require('../middleware/authMiddleware');
+const { createUser, verifyMail,getallUser,getOneUser,changePassword,forgotPassword,resetPassword } = require('../controllers/adminController')
+const {checkLogins} = require('../middleware/authMiddleware')
 
+const router = require ('express').Router()
 
-router.post('/login', adminController.login);
+router.post('/useer',checkLogins, createUser)
+router.get('/mail/:id', verifyMail)
+router.get('/user',getallUser)
+router.get('/one/:id',getOneUser)
+router.post("/change-password", changePassword);
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
 
-// router.post('/admins', authenticateToken, adminController.createAdmin);
-router.post('/teachers', authenticateToken, adminController.createTeacher);
-
-router.post('/students', authenticateToken, adminController.createStudent);
-
-router.post('/setup', adminController.createFirstAdmin);
-
-module.exports = router;
+module.exports = router
