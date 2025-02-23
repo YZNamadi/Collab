@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const schoolModel = require('../models/admin')
+const userModel = require('../models/admin')
 
 exports.checkLogins = async (req, res, next) =>{
     if(!req.headers.authorization){
@@ -20,7 +20,7 @@ exports.checkLogins = async (req, res, next) =>{
         return data
     })
     console.log(tokenOwner )
-    const checkUser = await schoolModel.findById(tokenOwner.id)
+    const checkUser = await userModel.findById(tokenOwner.id)
     if(!checkUser){
         return res.status(404).json({
             message: "School Not Found"
