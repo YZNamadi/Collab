@@ -1,9 +1,42 @@
 const mongoose = require('mongoose');
 
-const adminSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
-});
 
+const userSchema = new mongoose.Schema({
 
-module.exports = mongoose.model('Admin', adminSchema);
+    fullname:{
+        type: String,
+        required:true
+    },
+    email:{
+        type:String,
+        // required:true,
+        lowerCase:true,
+        
+    },
+    isVerified:{
+        type:Boolean,
+        default:false
+    },
+    password:{
+        type: String,
+        required:true
+    },
+    isSuperAdmin:{
+        type:Boolean,
+        default:false
+    },isAdmin:{
+        type:Boolean,
+        default:false
+    },
+    teachers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'teacher'
+    }],
+    students: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'student'
+    }]
+})
+
+const userModel = mongoose.model('user', userSchema)
+module.exports = userModel
