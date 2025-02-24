@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const teacherController = require('../controllers/teacherController');
-const authenticateToken = require('../middleware/authMiddleware');
+const {login,viewAssignedStudents,updateStudentDetails} = require('../controllers/teacherController');
+const {authenticateToken} = require('../middleware/authMiddleware');
 
 
-router.post('/login', teacherController.login);
+router.post('/login', login);
 
-router.get('/students', authenticateToken, teacherController.viewAssignedStudents);
+router.get('/students', authenticateToken, viewAssignedStudents);
 
 
-router.put('/students/:studentId', authenticateToken, teacherController.updateStudentDetails);
+router.put('/students/:studentId', authenticateToken, updateStudentDetails);
 
 module.exports = router;

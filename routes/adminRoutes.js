@@ -1,11 +1,12 @@
-const { createUser, verifyMail,getallUser,getOneUser,changePassword,forgotPassword,resetPassword } = require('../controllers/adminController')
-const {checkLogins} = require('../middleware/authMiddleware')
+const { createUser, verifyMail,getallUser,getOneUser,changePassword,forgotPassword,resetPassword, userLogin} = require('../controllers/adminController')
+const {authenticateToken} = require('../middleware/authMiddleware')
 const {checkRole} = require('../middleware/authorization')
 
 const router = require ('express').Router()
 
-router.post('/useer',checkRole, checkLogins, createUser)
+router.post('/user',checkRole, authenticateToken, createUser)
 router.get('/mail/:id', verifyMail)
+router.post('/login', userLogin)
 router.get('/user',checkRole,getallUser)
 router.get('/one/:id',checkRole, getOneUser)
 router.post("/change-password", changePassword);
