@@ -1,21 +1,21 @@
 const Student = require('../models/student');
 
 
-// exports.login = async (req, res) => {
-//     const { rollNumber } = req.body;
+exports.login = async (req, res) => {
+    const { rollNumber } = req.body;
 
-//     try {
-//         const student = await Student.findOne({ rollNumber });
-//         if (!student) {
-//             return res.status(400).json({ message: 'Invalid credentials.' })
-//         }
+    try {
+        const student = await Student.findOne({ rollNumber });
+        if (!student) {
+            return res.status(400).json({ message: 'Invalid credentials.' })
+        }
 
-//         const token = jwt.sign({ id: student._id, role: 'student' }, process.env.JWT_SECRET, { expiresIn: '1h' });
-//         res.json({ token });
-//     } catch (err) {
-//         res.status(500).json({ message: 'Server error.' })
-//     }
-// };
+        const token = jwt.sign({ id: student._id, role: 'student' }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.json({ token });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error.' })
+    }
+};
 
 
 exports.viewOwnDetails = async (req, res) => {
