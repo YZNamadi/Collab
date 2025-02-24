@@ -34,7 +34,7 @@ exports.createUser = async (req, res) => {
         await newUser.save();
 
         // Generate JWT token with an expiry of 3 minutes
-        const token = await jwt.sign({ id: newUser._id }, process.env.secret, { expiresIn: '3mins' });
+        const token = await jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '3mins' });
 
         // Generate the verification link
         const link = `${req.protocol}://${req.get('host')}/mail/${newUser._id}/${token}`;
