@@ -60,7 +60,7 @@ console.log(link);
 // Verify Email
 exports.verifyMail = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id,token } = req.params;
         console.log(req.params.token);
         
 
