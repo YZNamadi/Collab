@@ -34,7 +34,7 @@ exports.createUser = async (req, res) => {
         await newUser.save();
 
         // Generate JWT token with an expiry of 3 minutes
-        const token = await jwt.sign({ id: newUser._id }, process.env.secret, { expiresIn: '3mins' });
+        const token = await jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, { expiresIn: '3mins' });
 
         // Generate the verification link
         const link = `${req.protocol}://${req.get('host')}/mail/${newUser._id}/${token}`;
@@ -60,7 +60,7 @@ console.log(link);
 // Verify Email
 exports.verifyMail = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { id,token } = req.params;
         console.log(req.params.token);
         
 
@@ -125,7 +125,7 @@ exports.userLogin = async (req, res) => {
         // const {isVerified,schoolImageUrl,schoolImageId,department,students,dateCreated,password, ...others} = checkEmail._doc
 
         // console.log(newData)
-        const token = await jwt.sign({id:checkEmail._id}, process.env.secret, {expiresIn: '24hr'})
+        const token = await jwt.sign({id:checkEmail._id}, process.env.JWT_SECRET, {expiresIn: '24hr'})
         res.status(200).json({
             message: "Login Succesfully",
             data: newData,
@@ -175,7 +175,7 @@ exports.forgotPassword = async (req, res) => {
         }
 
         // Create reset token
-        const token = jwt.sign({ id: school._id }, process.env.secret, { expiresIn: "15m" });
+        const token = jwt.sign({ id: school._id }, process.env.JWT_SECRET, { expiresIn: "15m" });
 
         // Send reset link via email
         const link = `${req.protocol}:${req.get("host")}/reset-password/${token}`;
@@ -212,7 +212,7 @@ exports.resetPassword = async (req, res) => {
             return res.status(404).json({ message: "Invalid or expired token" });
         }
 // Verify token
-        await jwt.verify(req.params.token, process.env.secret, (error)=>{
+        await jwt.verify(req.params.token, process.env.JWT_SECRET, (error)=>{
             
             if(error){
                 return res.status(404).json({

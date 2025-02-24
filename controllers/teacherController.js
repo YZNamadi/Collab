@@ -1,7 +1,77 @@
 const Teacher = require('../models/teacher');
 const Student = require('../models/student');
+const userModel = require("../models/admin")
 
+exports.createStudent = async (req, res) => {
+    try {
+        const findSchool = await userModel.findById(req.params.id)
 
+        if (!findSchool) {
+            return res.status(404).json({ message: 'teacher not found' })
+        }
+
+        const { name, address, phoneNumber, email } = req.body
+        const data = {
+            name,
+            address,
+            phoneNumber,
+            email
+        }
+        const newstudent = new Teacher(data)
+
+        newstudent.students = req.params.id
+
+        await newstudent.save()
+        
+        findSchool.students.push(newstudent._id)
+        await findSchool.save()
+        res.status(201).json({
+            message: 'TEACHER created successfully',
+            data: newstudent
+        })
+
+    } catch (err) {
+        res.status(500).json({
+            message: err.message
+
+        })
+    }
+}
+exports.createStudent = async (req, res) => {
+    try {
+        const findSchool = await userModel.findById(req.params.id)
+
+        if (!findSchool) {
+            return res.status(404).json({ message: 'teacher not found' })
+        }
+
+        const { name, address, phoneNumber, email } = req.body
+        const data = {
+            name,
+            address,
+            phoneNumber,
+            email
+        }
+        const newstudent = new Teacher(data)
+
+        newstudent.students = req.params.id
+
+        await newstudent.save()
+        
+        findSchool.students.push(newstudent._id)
+        await findSchool.save()
+        res.status(201).json({
+            message: 'TEACHER created successfully',
+            data: newstudent
+        })
+
+    } catch (err) {
+        res.status(500).json({
+            message: err.message
+
+        })
+    }
+}
 exports.login = async (req, res) => {
     const { name, subject } = req.body;
 
@@ -53,3 +123,17 @@ exports.updateStudentDetails = async (req, res) => {
         res.status(500).json({ message: 'Failed to update student.' });
     }
 };
+exports.getallteacher = async (req, res) =>{
+    try {
+        const findallschool = await Teacher.find()
+        res.status(200).json({
+            message:" All Teacher in Database",
+            data:findallschool
+        })
+    } catch (error) {
+        res.status(500).json({
+            message:error.message 
+        })
+      
+    }
+}

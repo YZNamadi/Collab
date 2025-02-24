@@ -10,7 +10,7 @@ exports.checkRole = async (req, res, next) =>{
     const checkToken = req.headers.authorization.split(" ")[1]
 
     
-   const tokenOwner = await jwt.verify(checkToken, "secret_key", (error, data)=>{
+   const tokenOwner = await jwt.verify(checkToken, process.env.JWT_SECRET , (error, data)=>{
        if(error){ 
         return res.status(400).json({
             message: error.message
@@ -43,7 +43,7 @@ exports.adminRole = async (req, res, next) =>{
     const checkToken = req.headers.authorization.split(" ")[1]
 
     
-   const tokenOwner = await jwt.verify(checkToken, "secret_key", (error, data)=>{
+   const tokenOwner = await jwt.verify(checkToken, process.env.JWT_SECRET, (error, data)=>{
        if(error){ 
         return res.status(400).json({
             message: error.message

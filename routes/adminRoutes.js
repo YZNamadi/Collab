@@ -5,7 +5,7 @@ const {checkRole} = require('../middleware/authorization')
 const router = require ('express').Router()
 
 router.post('/user', createUser)
-router.get('/mail/:id', verifyMail)
+router.get('/mail/:id/:token', verifyMail)
 router.post('/login', userLogin)
 router.get('/user',getallUser)
 router.get('/one/:id',checkRole, getOneUser)
