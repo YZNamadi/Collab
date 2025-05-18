@@ -10,6 +10,8 @@ exports.getOneStudent = async (req, res)=>{
             })
         }
 
+
+        
           //This will extract the token from the authorization header
             const checkToken = req.headers.authorization.split(" ")[1]
           
