@@ -9,6 +9,8 @@ const bcrypt = require('bcryptjs');
 const secret_key = process.env.JWT_SECRET;
 
 
+
+
 exports.createStudent = async (req, res)=>{
     try {
         
