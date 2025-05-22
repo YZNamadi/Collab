@@ -15,6 +15,7 @@ const html=(verifyLink,firstName)=>{
                 margin: 0;
                 padding: 0;
             }
+            
             .container {
                 width: 80%;
                 margin: 20px auto;
